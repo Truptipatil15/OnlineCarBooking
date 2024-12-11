@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reserve Parking Slot</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, rgb(240, 240, 250), rgb(244, 244, 250));
+      font-family: Arial, sans-serif;
+      background-image: url('../images/reserved.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: rgb(250, 233, 233);
+    }
+    
+    .navbar-logo {
+      width: 40px;
+      height: auto;
+      border-radius: 50%;
+    }
+
+  
+    .navbar-brand {
+      font-weight: bold;
+      color: rgb(250, 233, 233);
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+    }
+
+   
+    .rounded-nav {
+      padding: 0.5rem 1rem;
+      box-shadow: 0px 4px 10px rgba(81, 206, 57, 0.2);
+      background-color: rgb(79, 79, 95);
+      border-radius: 8px;
+    }
+
+    .navbar-nav .nav-link {
+      color: rgb(250, 233, 233);
+      background-color: rgba(70, 148, 226, 0.8);
+      border-radius: 20px;
+      padding: 8px 15px;
+      margin: 0 5px;
+      transition: background-color 0.3s, color 0.3s;
+      font-weight: 500;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color:rgb(250, 233, 233);
+      background-color: rgb(253, 208, 9);
+    }
+
+    .navbar, footer {
+      background-color:  rgb(50, 50, 253);
+    }
+
+    .container {
+      max-width: 600px;
+    }
+
+    .card {
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      color: rgb(250, 233, 233);
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary {
+      background-color:  rgb(3, 3, 223);
+      border: none;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .btn-primary:hover {
+      background-color: rgb(3, 3, 223);
+    }
+
+    .alert-success {
+      margin-top: 20px;
+      font-size: 1rem;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+ 
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand d-flex align-items-center" href="index.html">
+      <img src="../images/logo.jfif" alt="Logo" class="navbar-logo me-2"> 
+      Parking Reservation System
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="locations.html">Parking Locations</a></li>
+        <li class="nav-item"><a class="nav-link" href="reservation.html">Reserve Now</a></li>
+        <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="signin.html">Sign In/Sign Up</a></li>
+      </ul>
+    </div>
+  </nav>
+
+ 
+  <div class="container mt-5">
+    <div class="card">
+      <h2 class="text-center mb-4">Reserve a Parking Slot</h2>
+      <form id="reservationForm">
+        <input type="hidden" id="reservationId" value="">
+        <div class="mb-4">
+          <label for="parkingLocation" class="form-label">Select Parking Location</label>
+          <select id="parkingLocation" class="form-select" required>
+            <option value="">Choose a location...</option>
+            <option value="Mall Parking">Mall Parking</option>
+            <option value="Downtown Parking">Downtown Parking</option>
+            <option value="Airport Parking">Airport Parking</option>
+            <option value="Stadium Parking">Stadium Parking</option>
+            <option value="University Parking">University Parking</option>
+            <option value="Hospital Parking">Hospital Parking</option>
+          </select>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <label for="reservationDate" class="form-label">Reservation Date</label>
+            <input type="date" id="reservationDate" class="form-control" required>
+          </div>
+          <div class="col-md-6 mb-4">
+            <label for="reservationTime" class="form-label">Reservation Time</label>
+            <input type="time" id="reservationTime" class="form-control" required>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label for="duration" class="form-label">Duration (hours)</label>
+          <input type="number" id="duration" class="form-control" min="1" max="24" required>
+        </div>
+        <div class="mb-4">
+          <label for="vehicleNumber" class="form-label">Vehicle Number</label>
+          <input type="text" id="vehicleNumber"  pattern="^[A-Za-z0-9]+$"   class="form-control" placeholder="Enter your vehicle number" required>
+        </div>
+        <h5 class="mt-4">Payment Information</h5>
+        <div class="mb-4">
+          <label for="paymentMethod" class="form-label">Payment Method</label>
+          <select id="paymentMethod" class="form-select" required>
+            <option value="">Select payment method...</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Debit Card">Debit Card</option>
+            <option value="PayPal">PayPal</option>
+          </select>
+        </div>
+        
+        
+        <button type="submit" class="btn btn-primary btn-block">Reserve Now</button>
+      </form>
+      <div id="successMessage" class="alert alert-success mt-3 d-none">Reservation successful! Check Dashboard</div>
+    </div>
+  </div>
+
+  <footer class="bg-dark text-white text-center p-3 mt-5">
+    <p>&copy; 2024 Parking Reservation System. All rights reserved.</p>
+  </footer>
+
+  <script>
+    $(document).ready(function() {
+      $('#reservationForm').submit(function(e) {
+          e.preventDefault();
+          const reservationData = {
+              Location: $('#parkingLocation').val(),
+              Date: $('#reservationDate').val(),
+              Time: $('#reservationTime').val(),
+              Duration: $('#duration').val(),
+              VehicleNum: $('#vehicleNumber').val()
+          };
+          $.ajax({
+              url: 'http://localhost:9600/reservation/save',
+              method: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify(reservationData),
+              success: function(response) {
+                  $('#successMessage').removeClass('d-none');
+                  $('#reservationForm')[0].reset();
+              },
+              error: function(xhr, status, error) {
+                  alert('Error adding reservation: ' + error);
+              }
+          });
+      });
+    });
+  </script>
+</body>
+</html>
+
+
